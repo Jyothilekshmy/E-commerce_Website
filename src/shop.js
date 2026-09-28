@@ -338,7 +338,6 @@ filterBtn.addEventListener("click", () => {
 closeFilter.addEventListener("click", () => {
   filterDrawer.classList.remove("translate-x-0");
   filterDrawer.classList.add("-translate-x-full");
-
   filterOverlay.classList.add("hidden");
 });
 
@@ -347,7 +346,6 @@ closeFilter.addEventListener("click", () => {
 filterOverlay.addEventListener("click", () => {
   filterDrawer.classList.remove("translate-x-0");
   filterDrawer.classList.add("-translate-x-full");
-
   filterOverlay.classList.add("hidden");
 });
 const backToTop = document.getElementById("backToTop");

@@ -382,63 +382,62 @@ function updateParallax(){
 window.addEventListener('scroll', updateParallax, { passive: true });
 window.addEventListener('resize', updateParallax);
 updateParallax();
+
 const carousel = document.getElementById("featuredCarousel");
+const originalCards = [...carousel.querySelectorAll(".featured-card")];
 
-if (carousel) {
+let currentIndex = 0;
+let cardWidth = 0;
+let gap = 24;
 
-  const originalCards = [...carousel.querySelectorAll(".featured-card")];
+// Clone the 3 cards
+originalCards.forEach(card => {
+  const clone = card.cloneNode(true);
+  carousel.appendChild(clone);
+});
 
-  let currentIndex = 0;
-  let cardWidth = 0;
-  let gap = 24;
+// Calculate card width
+function updateSize() {
+  const card = carousel.querySelector(".featured-card");
 
-  // Clone the 3 cards
-  originalCards.forEach(card => {
-    const clone = card.cloneNode(true);
-    carousel.appendChild(clone);
-  });
-
-  // Calculate card width
-  function updateSize() {
-    const card = carousel.querySelector(".featured-card");
-
-    cardWidth = card.offsetWidth;
-    gap = 24;
-  }
-
-  updateSize();
-
-  window.addEventListener("resize", updateSize);
-
-  // Move one card
-  function moveCarousel() {
-
-    currentIndex++;
-
-    carousel.style.transition = "transform 700ms ease-in-out";
-
-    carousel.style.transform =
-      `translateX(-${currentIndex * (cardWidth + gap)}px)`;
-
-    // After the cloned cards
-    if (currentIndex === originalCards.length) {
-
-      setTimeout(() => {
-
-        carousel.style.transition = "none";
-
-        currentIndex = 0;
-
-        carousel.style.transform = "translateX(0)";
-
-      }, 700);
-    }
-  }
-
-  // Auto move
-  setInterval(moveCarousel, 2500);
-
+  cardWidth = card.offsetWidth;
+  gap = 24;
 }
+
+updateSize();
+
+window.addEventListener("resize", updateSize);
+
+
+// Move one card
+function moveCarousel() {
+
+  currentIndex++;
+
+  carousel.style.transition = "transform 700ms ease-in-out";
+
+  carousel.style.transform =
+    `translateX(-${currentIndex * (cardWidth + gap)}px)`;
+
+
+  // After the cloned cards
+  if (currentIndex === originalCards.length) {
+
+    setTimeout(() => {
+
+      carousel.style.transition = "none";
+
+      currentIndex = 0;
+
+      carousel.style.transform = "translateX(0)";
+
+    }, 700);
+  }
+}
+
+
+// Auto move
+setInterval(moveCarousel, 2500);
 const backToTop = document.getElementById("backToTop");
 
 window.addEventListener("scroll", () => {
